@@ -1,15 +1,40 @@
 {
-  "navigationFallback": { "rewrite": "/index.html" },
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/assets/*",
+      "/*.css",
+      "/*.js",
+      "/*.ico",
+      "/*.png",
+      "/*.jpg",
+      "/*.jpeg",
+      "/*.gif",
+      "/*.svg",
+      "/*.woff",
+      "/*.ttf",
+      "/*.map"
+    ]
+  },
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/index.html"
+    }
+  },
   "globalHeaders": {
+    "X-Frame-Options": "DENY",
     "X-Content-Type-Options": "nosniff",
-    "Referrer-Policy": "strict-origin-when-cross-origin"
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "X-XSS-Protection": "1; mode=block"
+  },
+  "mimeTypes": {
+    ".json": "text/json",
+    ".webmanifest": "application/manifest+json"
   },
   "routes": [
     {
-      "route": "/(.*)",
-      "redirect": "https://lockwooditsolutions.com/{*path}",
-      "statusCode": 308,
-      "domain": "www.lockwooditsolutions.com"
+      "route": "/api/*",
+      "allowedRoles": [ "anonymous" ]
     }
   ]
 }
