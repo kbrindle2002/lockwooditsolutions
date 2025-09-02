@@ -1,0 +1,15 @@
+{
+  "navigationFallback": { "rewrite": "/index.html" },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "routes": [
+    {
+      "route": "/(.*)",
+      "redirect": "https://lockwooditsolutions.com/{*path}",
+      "statusCode": 308,
+      "domain": "www.lockwooditsolutions.com"
+    }
+  ]
+}
