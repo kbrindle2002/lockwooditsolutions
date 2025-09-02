@@ -4,14 +4,14 @@ on:
   push:
     branches: [ main ]
   repository_dispatch:
-    types: [ builder_publish ]   # optional: trigger deploys from Builder.io webhook
+    types: [ builder_publish ]   # optional: if you trigger deploys from a webhook
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches: [ main ]
 
 jobs:
   build_and_deploy:
-    # Run for push / repo_dispatch / PR (except PR closed)
+    # Run for push / repo_dispatch / PR (except when a PR is being closed)
     if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
 
@@ -24,36 +24,46 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install deps
+      - name: Install dependencies
         run: npm ci
 
-      # Build your Next.js site; this produces the /out folder when using output: 'export'
-      - name: Build app
+      - name: Build (Next.js static export)
         run: npm run build
+        # Expect your Next.js config to have:  output: 'export'
+        # which writes the static site to ./out
+
+      # --- Safety step: fail early if the SWA token secret is missing ---
+      - name: Check SWA token presence (masked)
+        run: |
+          if [ -z "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}" ]; then
+            echo "ERROR: Missing repo secret AZURE_STATIC_WEB_APPS_API_TOKEN."
+            echo "Get it from Azure Portal → your SWA → Manage deployment token, then add it in GitHub:"
+            echo "Repo → Settings → Secrets and variables → Actions → New repository secret."
+            exit 1
+          else
+            echo "SWA token present (value is masked)."
+          fi
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
-          # REQUIRED: paste this token as a repo secret named AZURE_STATIC_WEB_APPS_API_TOKEN
+          # NOTE: must match the repo secret name exactly
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
 
-          # Useful for PR comments/status (provided by GitHub automatically)
+          # PR comments/status (provided by GitHub automatically)
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
           # Explicitly upload artifacts
           action: upload
 
           # Paths
-          app_location: "/"        # Next.js app root (where package.json lives)
-          output_location: "out"   # Next.js static export output
+          app_location: "/"        # Next.js app root (package.json lives here)
+          output_location: "out"   # Next.js static export folder
 
-          # Include Azure Functions if you have an /api folder (contacts-create, contacts-list, etc.)
+          # Include Azure Functions if you have an /api folder
           api_location: "api"
 
-          # Helpful hint for Next.js static export deployments
-          is_static_export: true
-
-  # Required to tell SWA to tear down PR environments when PRs are closed
+  # Required by SWA: close preview environment when PR is closed
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
