@@ -2,9 +2,9 @@
   "$schema": "https://aka.ms/azure/static-web-apps-cli/schema",
   "configurations": {
     "lits": {
-      "appLocation": ".",
-      "outputLocation": ".next",
-      "appBuildCommand": "npm run build",
+      "appLocation": "lits",
+      "outputLocation": "out",
+      "appBuildCommand": "npm run build && npm run export",
       "run": "npm run dev",
       "appDevserverUrl": "http://localhost:3000"
     }
