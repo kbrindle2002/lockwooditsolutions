@@ -1,0 +1,37 @@
+# Handle line endings automatically for text files
+* text=auto eol=lf
+
+# Ensure JSON, YAML, and config files always use LF
+*.json text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.config text eol=lf
+*.env text eol=lf
+
+# Ensure JavaScript/TypeScript files use LF
+*.js  text eol=lf
+*.jsx text eol=lf
+*.ts  text eol=lf
+*.tsx text eol=lf
+
+# Ensure CSS and HTML files use LF
+*.css  text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+
+# Keep Markdown and docs consistent
+*.md   text eol=lf
+*.txt  text eol=lf
+
+# Treat images and binaries as binary (no diffs)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.pdf binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
