@@ -1,17 +1,44 @@
-# Node / Next
+# Node.js dependencies
 node_modules/
-.next/
-out/
-dist/
-
-# Azure Functions local
-api/node_modules/
-local.settings.json
-
-# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# Env
-.env*
+# Next.js build output
+.next/
+out/
+
+# Local environment files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Logs
+logs
+*.log
+*.log.*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# OS junk files
+.DS_Store
+Thumbs.db
+
+# VSCode/IDE
+.vscode/
+.idea/
+
+# Azure Static Web Apps CLI cache
+.swa/
+
+# Coverage and test output
+coverage/
+*.lcov
+
+# Misc
+*.tgz
