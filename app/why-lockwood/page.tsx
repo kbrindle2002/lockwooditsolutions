@@ -6,7 +6,7 @@ import { Card, PrimaryLink, SecondaryLink, SectionHeading } from "@/components/u
 import { processSteps } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Why LIT",
+  title: "Why Lockwood IT Solutions",
   description:
     "Founder-led managed IT with more than three decades of hands-on experience, clear documentation, security-first operations, and plain-English guidance.",
   alternates: { canonical: "/why-lockwood/" },
@@ -47,7 +47,7 @@ export default function WhyLockwoodPage() {
   return (
     <>
       <PageHero
-        eyebrow="Why LIT"
+        eyebrow="Why Lockwood IT Solutions"
         title="Enterprise experience, delivered personally and sized for small business"
         description="Lockwood IT Solutions combines more than three decades of hands-on IT experience with founder involvement, practical security, clear documentation, and direct communication."
         actions={

@@ -18,7 +18,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Start with the business problem, not a product pitch"
-        description="Share what is creating downtime, risk, confusion, or unnecessary cost. Lockwood will review the context and help identify a practical next step."
+        description="Share what is creating downtime, risk, confusion, or unnecessary cost. Lockwood IT Solutions will review the context and help identify a practical next step."
       />
 
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.7fr_1.3fr] lg:px-8 lg:py-20">

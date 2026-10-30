@@ -50,6 +50,7 @@ const structuredData = {
   email: site.email,
   telephone: site.phoneHref,
   slogan: site.tagline,
+  sameAs: [site.social.linkedin],
   founder: {
     "@type": "Person",
     name: "Kelly L. Lockwood",

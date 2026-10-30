@@ -109,14 +109,14 @@ export default function WhoWeHelpPage() {
 
       <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <Card className="border-amber-200 bg-amber-50/60 p-7 sm:p-8">
-          <h2 className="text-2xl font-bold text-slate-950">When Lockwood may not be the right fit</h2>
+          <h2 className="text-2xl font-bold text-slate-950">When Lockwood IT Solutions may not be the right fit</h2>
           <p className="mt-4 leading-7 text-slate-700">
             A good relationship requires realistic scope and mutual accountability. Environments that require a staffed 24/7 operations center, unlimited on-site coverage, specialized regulatory counsel, or a large multi-state field team may need a different primary provider or a co-managed arrangement.
           </p>
         </Card>
       </section>
 
-      <CallToAction title="Not sure whether your business is a fit?" description="A short assessment conversation can identify the environment, priorities, and whether Lockwood is the right partner—or whether another path makes more sense." />
+      <CallToAction title="Not sure whether your business is a fit?" description="A short assessment conversation can identify the environment, priorities, and whether Lockwood IT Solutions is the right partner—or whether another path makes more sense." />
     </>
   );
 }

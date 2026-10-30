@@ -16,7 +16,7 @@ export default function SupportPage() {
     <>
       <PageHero
         eyebrow="Client support"
-        title="Need help with an existing Lockwood-managed environment?"
+        title="Need support for an environment managed by Lockwood IT Solutions?"
         description="Use the support method defined in your service agreement whenever possible. For general requests, you can call or email using the contact information below."
         actions={
           <>
