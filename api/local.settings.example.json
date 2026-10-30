@@ -5,7 +5,7 @@
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "SENDGRID_API_KEY": "replace-me",
     "CONTACT_FROM": "verified-sender@lockwooditsolutions.com",
-    "CONTACT_TO": "contact@lockwooditsolutions.com",
+    "CONTACT_TO": "info@lockwooditsolutions.com",
     "ALLOWED_ORIGINS": "http://localhost:3000,http://localhost:4280"
   }
 }

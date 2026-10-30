@@ -60,8 +60,8 @@ export default function TermsPage() {
           <h2 className="text-2xl font-bold text-slate-950">Contact</h2>
           <p className="mt-3">
             Questions may be sent to{" "}
-            <a className="font-semibold text-blue-700 underline underline-offset-2" href="mailto:contact@lockwooditsolutions.com">
-              contact@lockwooditsolutions.com
+            <a className="font-semibold text-blue-700 underline underline-offset-2" href="mailto:info@lockwooditsolutions.com">
+              info@lockwooditsolutions.com
             </a>
             .
           </p>

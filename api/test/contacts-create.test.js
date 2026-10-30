@@ -57,7 +57,7 @@ function request(body = validBody(), overrides = {}) {
 function configureDelivery() {
   process.env.SENDGRID_API_KEY = "SG.test-key";
   process.env.CONTACT_FROM = "website@lockwooditsolutions.com";
-  process.env.CONTACT_TO = "contact@lockwooditsolutions.com";
+  process.env.CONTACT_TO = "info@lockwooditsolutions.com";
 }
 
 function clearSettings() {
@@ -139,7 +139,7 @@ test("sends a valid request through SendGrid", async () => {
 
   const payload = JSON.parse(captured.options.body);
   assert.equal(payload.reply_to.email, "test@example.com");
-  assert.equal(payload.personalizations[0].to[0].email, "contact@lockwooditsolutions.com");
+  assert.equal(payload.personalizations[0].to[0].email, "info@lockwooditsolutions.com");
 });
 
 test("reports provider failures without exposing provider details", async () => {

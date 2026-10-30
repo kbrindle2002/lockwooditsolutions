@@ -63,7 +63,7 @@ export default function HomePage() {
               Lockwood IT Solutions helps small businesses manage Microsoft 365, devices, cybersecurity, backups, networks, and day-to-day support without building an internal IT department.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <PrimaryLink href="/contact/" className="bg-white text-[#082b59] hover:bg-blue-50">
+              <PrimaryLink href="/contact/" variant="light">
                 Schedule an IT assessment
               </PrimaryLink>
               <SecondaryLink href="/services/" className="border-white/35 bg-white/5 text-white hover:bg-white/10">

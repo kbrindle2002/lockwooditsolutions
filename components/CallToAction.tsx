@@ -15,7 +15,7 @@ export default function CallToAction({
           <p className="mt-3 max-w-2xl text-blue-100">{description}</p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-          <PrimaryLink href="/contact/" className="bg-white text-[#082b59] hover:bg-blue-50">
+          <PrimaryLink href="/contact/" variant="light">
             Schedule an IT assessment
           </PrimaryLink>
           <SecondaryLink href="tel:+12624172461" className="border-white/30 bg-white/5 text-white hover:bg-white/10">

@@ -56,16 +56,21 @@ export function PrimaryLink({
   href,
   children,
   className,
+  variant = "brand",
 }: {
   href: string;
   children: ReactNode;
   className?: string;
+  variant?: "brand" | "light";
 }) {
   return (
     <Link
       href={href}
       className={cx(
-        "inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2",
+        "inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+        variant === "light"
+          ? "bg-white text-[#082b59] hover:bg-blue-50 focus-visible:ring-cyan-300 focus-visible:ring-offset-[#082b59]"
+          : "bg-blue-700 text-white hover:bg-blue-800 focus-visible:ring-blue-600",
         className,
       )}
     >

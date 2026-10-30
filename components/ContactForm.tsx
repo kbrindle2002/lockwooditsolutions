@@ -222,7 +222,7 @@ export default function ContactForm() {
         )}
         {status === "error" && (
           <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 font-medium text-red-800">
-            The form could not be delivered. Please call (262) 417-2461 or email contact@lockwooditsolutions.com.
+            The form could not be delivered. Please call (262) 417-2461 or email info@lockwooditsolutions.com.
             {requestId && <span className="mt-1 block text-xs font-normal">Reference: {requestId}</span>}
           </p>
         )}
