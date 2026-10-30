@@ -20,7 +20,7 @@ const questions = [
   {
     question: "Do you publish per-user pricing?",
     answer:
-      "Not before the environment is understood. User count matters, but so do devices, locations, current technical debt, security requirements, licensing, backup, support hours, on-site needs, and the amount of responsibility Lockwood will carry. Pricing is proposal-based so the scope is accurate rather than artificially simple.",
+      "Not before the environment is understood. User count matters, but so do devices, locations, current technical debt, security requirements, licensing, backup, support hours, on-site needs, and the level of responsibility Lockwood IT Solutions will assume. Pricing is proposal-based so the scope is accurate rather than artificially simple.",
   },
   {
     question: "Do you support businesses with internal IT staff?",
@@ -30,7 +30,7 @@ const questions = [
   {
     question: "Can an MSP make a business compliant?",
     answer:
-      "An MSP can help implement and operate technical controls that support a customer’s obligations. Compliance also depends on business processes, policies, contracts, training, legal interpretation, and leadership decisions. Lockwood does not present managed IT as an automatic compliance guarantee.",
+      "An MSP can help implement and operate technical controls that support a customer’s obligations. Compliance also depends on business processes, policies, contracts, training, legal interpretation, and leadership decisions. Lockwood IT Solutions does not present managed IT as an automatic compliance guarantee.",
   },
   {
     question: "What happens during onboarding?",
@@ -104,7 +104,7 @@ export default function ResourcesPage() {
           <SectionHeading
             eyebrow="Frequently asked questions"
             title="Questions worth asking before work begins"
-            description="These answers describe the intended Lockwood service model. Final commitments belong in the applicable proposal or service agreement."
+            description="These answers describe the intended Lockwood IT Solutions service model. Final commitments belong in the applicable proposal or service agreement."
           />
           <div className="mt-10 grid gap-5">
             {questions.map((item) => (

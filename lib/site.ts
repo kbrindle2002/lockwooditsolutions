@@ -19,6 +19,9 @@ export const site = {
   tagline: "Secure. Smart. Scalable.",
   serviceArea: "Southeast Wisconsin and Northern Illinois",
   remoteArea: "Remote support available across the Midwest",
+  social: {
+    linkedin: "https://www.linkedin.com/company/lockwooditsolutions/",
+  },
 };
 
 export const navigation = [

@@ -32,7 +32,7 @@ export default function Page() {
       service={service}
       whatItSolves={whatItSolves}
       deliverables={deliverables}
-      boundaries={"Managed IT is most effective when the responsibilities of Lockwood, the customer, software vendors, internet providers, and other partners are explicit. Support availability and response targets must be defined in the written agreement rather than assumed from website language."}
+      boundaries={"Managed IT is most effective when the responsibilities of Lockwood IT Solutions, the customer, software vendors, internet providers, and other partners are explicit. Support availability and response targets must be defined in the written agreement rather than assumed from website language."}
     />
   );
 }

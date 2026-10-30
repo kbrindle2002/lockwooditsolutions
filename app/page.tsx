@@ -189,7 +189,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             tone="dark"
-            eyebrow="How Lockwood works"
+            eyebrow="How Lockwood IT Solutions works"
             title="A disciplined path from uncertainty to steady operations"
             description="You should know what is being done, why it matters, what is still unknown, and which decisions remain yours."
           />
@@ -207,7 +207,7 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <SectionHeading
-          eyebrow="Why LIT"
+          eyebrow="Why Lockwood IT Solutions"
           title="Enterprise experience, delivered personally and sized for small business"
           description="Lockwood IT Solutions combines more than three decades of hands-on IT experience with founder involvement, practical security, and direct communication."
         />
