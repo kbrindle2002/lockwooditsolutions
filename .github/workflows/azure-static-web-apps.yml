@@ -1,4 +1,4 @@
-name: Azure Static Web Apps CI/CD
+name: Validate and deploy Lockwood IT Solutions
 
 on:
   push:
@@ -7,39 +7,94 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches: [main]
 
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: lockwood-site-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build_and_deploy_job:
+  validate:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
+    name: Validate website and API
     steps:
-      - name: Checkout repository
+      - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
+          cache: npm
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install website dependencies
+        run: npm ci
 
-      - name: Build Next.js static site
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Build static site
         run: npm run build
 
-      - name: Deploy to Azure Static Web Apps
+      - name: Check generated routes, links, and assets
+        run: npm run check:output
+
+      - name: Install API package
+        run: npm ci
+        working-directory: api
+
+      - name: Test contact API
+        run: npm test
+        working-directory: api
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Audit API production dependencies
+        run: npm audit --omit=dev --audit-level=high
+        working-directory: api
+
+  build_and_deploy:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    needs: validate
+    runs-on: ubuntu-latest
+    name: Build and deploy to Azure Static Web Apps
+    env:
+      AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Deploy website and managed API
+        if: env.AZURE_STATIC_WEB_APPS_API_TOKEN != ''
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
-          app_location: "/"        # App root
-          output_location: "out"   # Next.js static export folder
-        env:
-          # Backend-only secrets
-          AZURE_TABLES_CONNECTION_STRING: ${{ secrets.AZURE_TABLES_CONNECTION_STRING }}
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-          CONTACTS_TABLE: ${{ secrets.CONTACTS_TABLE }}
+          action: upload
+          app_location: /
+          api_location: api
+          output_location: out
+          app_build_command: npm run build
+          production_branch: main
 
-          # Frontend-exposed vars
-          NEXT_PUBLIC_CONTACT_FROM: ${{ secrets.NEXT_PUBLIC_CONTACT_FROM }}
-          NEXT_PUBLIC_CONTACT_TO: ${{ secrets.NEXT_PUBLIC_CONTACT_TO }}
+      - name: Explain skipped deployment
+        if: env.AZURE_STATIC_WEB_APPS_API_TOKEN == ''
+        run: echo "Validation passed, but deployment was skipped because AZURE_STATIC_WEB_APPS_API_TOKEN is not configured."
+
+  close_preview:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close pull-request preview
+    env:
+      AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+    steps:
+      - name: Close preview environment
+        if: env.AZURE_STATIC_WEB_APPS_API_TOKEN != ''
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: close

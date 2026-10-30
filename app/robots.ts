@@ -1,8 +1,16 @@
+import type { MetadataRoute } from "next";
+import { site } from "@/lib/site";
 
-export default function robots() {
-  const base = process.env.SITE_URL || 'http://localhost:5173'
+export const dynamic = "force-static";
+
+export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: '*', allow: '/' }],
-    sitemap: `${base}/sitemap.xml`
-  }
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/api/"],
+    },
+    sitemap: `${site.url}/sitemap.xml`,
+    host: site.url,
+  };
 }

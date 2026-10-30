@@ -1,10 +1,11 @@
 {
-  "name": "lits-api",
-  "version": "1.0.0",
+  "name": "lockwood-it-solutions-api",
+  "version": "3.0.0",
   "private": true,
-  "dependencies": {
-    "@azure/data-tables": "^13.3.0",
-    "@sendgrid/mail": "^8.1.0",
-    "lits-site": "file:.."
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
   }
 }

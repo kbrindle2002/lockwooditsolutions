@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 693 220" role="img" aria-labelledby="title desc">
+  <title id="title">Lockwood IT Solutions</title>
+  <desc id="desc">Shield, cloud, and circuit logo with the tagline Secure. Smart. Scalable.</desc>
+  <g transform="translate(5 7)">
+    <path d="M78 2 148 26v66c0 48-29 82-70 104C37 174 8 140 8 92V26Z" fill="#082b59"/>
+    <path d="M47 84c0-14 11-25 25-25 10 0 19 6 23 15 3-2 7-3 11-3 12 0 22 10 22 22s-10 22-22 22H51c-13 0-24-10-24-23 0-11 9-21 20-22Z" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round">
+      <path d="M57 115v39"/>
+      <path d="M78 115v54"/>
+      <path d="M100 115v39"/>
+    </g>
+    <g fill="#082b59" stroke="#fff" stroke-width="5">
+      <circle cx="57" cy="112" r="7"/>
+      <circle cx="78" cy="112" r="7"/>
+      <circle cx="100" cy="112" r="7"/>
+      <circle cx="57" cy="158" r="7"/>
+      <circle cx="78" cy="173" r="7"/>
+      <circle cx="100" cy="158" r="7"/>
+    </g>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="176" y="80" fill="#082b59" font-size="62" font-weight="700" letter-spacing="1">LOCKWOOD</text>
+    <text x="176" y="143" fill="#082b59" font-size="54" font-weight="700" letter-spacing="0.5">IT SOLUTIONS</text>
+    <text x="178" y="188" fill="#4b5563" font-size="27" font-weight="500">Secure. Smart. Scalable.</text>
+  </g>
+</svg>
