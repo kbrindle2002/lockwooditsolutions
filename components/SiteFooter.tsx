@@ -46,7 +46,7 @@ export default function SiteFooter() {
           <ul className="mt-4 space-y-3 text-sm">
             <li><Link href="/why-lockwood/" className="text-blue-50 hover:text-white hover:underline">Why LIT</Link></li>
             <li><Link href="/who-we-help/" className="text-blue-50 hover:text-white hover:underline">Who We Help</Link></li>
-            <li><Link href="/resources/" className="text-blue-50 hover:text-white hover:underline">Resources &amp; FAQ</Link></li>
+            <li><Link href="/resources/" className="text-blue-50 hover:text-white hover:underline">Resources</Link></li>
             <li><Link href="/support/" className="text-blue-50 hover:text-white hover:underline">Client Support</Link></li>
             <li><Link href="/contact/" className="text-blue-50 hover:text-white hover:underline">Contact</Link></li>
           </ul>
