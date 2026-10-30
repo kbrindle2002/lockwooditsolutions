@@ -32,22 +32,35 @@ export function SectionHeading({
   description,
   centered = false,
   as = "h2",
+  tone = "light",
 }: {
   eyebrow?: string;
   title: string;
   description?: string;
   centered?: boolean;
   as?: "h1" | "h2";
+  tone?: "light" | "dark";
 }) {
   const Heading = as;
 
   return (
     <div className={cx("max-w-3xl", centered && "mx-auto text-center")}>
-      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      <Heading className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+      {eyebrow && (
+        <Eyebrow className={tone === "dark" ? "text-cyan-200" : undefined}>{eyebrow}</Eyebrow>
+      )}
+      <Heading
+        className={cx(
+          "mt-3 text-3xl font-bold tracking-tight sm:text-4xl",
+          tone === "dark" ? "text-white" : "text-slate-950",
+        )}
+      >
         {title}
       </Heading>
-      {description && <p className="mt-4 text-lg leading-8 text-slate-600">{description}</p>}
+      {description && (
+        <p className={cx("mt-4 text-lg leading-8", tone === "dark" ? "text-blue-100" : "text-slate-600")}>
+          {description}
+        </p>
+      )}
     </div>
   );
 }

@@ -9,7 +9,15 @@ export default function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr] lg:px-8">
         <div>
           <div className="flex items-center gap-3">
-            <Image src="/lockwood-mark.svg" alt="" width={256} height={256} className="h-14 w-14" />
+            <span className="inline-flex rounded-2xl bg-white p-1 shadow-sm">
+              <Image
+                src="/lockwood-mark-approved.png"
+                alt=""
+                width={512}
+                height={477}
+                className="h-14 w-14 object-contain"
+              />
+            </span>
             <div>
               <p className="text-lg font-bold">{site.name}</p>
               <p className="text-sm text-blue-100">{site.tagline}</p>
@@ -36,7 +44,7 @@ export default function SiteFooter() {
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-blue-200">Company</h2>
           <ul className="mt-4 space-y-3 text-sm">
-            <li><Link href="/why-lockwood/" className="text-blue-50 hover:text-white hover:underline">Why Lockwood</Link></li>
+            <li><Link href="/why-lockwood/" className="text-blue-50 hover:text-white hover:underline">Why LIT</Link></li>
             <li><Link href="/who-we-help/" className="text-blue-50 hover:text-white hover:underline">Who We Help</Link></li>
             <li><Link href="/resources/" className="text-blue-50 hover:text-white hover:underline">Resources &amp; FAQ</Link></li>
             <li><Link href="/support/" className="text-blue-50 hover:text-white hover:underline">Client Support</Link></li>
@@ -59,9 +67,15 @@ export default function SiteFooter() {
                 <span>{site.email}</span>
               </a>
             </li>
-            <li className="flex items-start gap-3">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-              <span>{site.serviceArea}<br />{site.remoteArea}</span>
+            <li>
+              <Link
+                href="/contact/#service-area-map"
+                className="flex items-start gap-3 transition hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                aria-label="View the Lockwood IT Solutions service area map"
+              >
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                <span>{site.serviceArea}<br />{site.remoteArea}</span>
+              </Link>
             </li>
           </ul>
         </div>

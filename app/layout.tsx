@@ -46,7 +46,7 @@ const structuredData = {
   "@type": ["Organization", "LocalBusiness"],
   name: site.name,
   url: site.url,
-  logo: `${site.url}/lockwood-logo.svg`,
+  logo: `${site.url}/lockwood-logo-approved.png`,
   email: site.email,
   telephone: site.phoneHref,
   slogan: site.tagline,

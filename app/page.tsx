@@ -51,7 +51,7 @@ export default function HomePage() {
           <div className="absolute -right-32 -top-40 h-96 w-96 rounded-full bg-blue-400 blur-3xl" />
           <div className="absolute -bottom-48 left-1/4 h-96 w-96 rounded-full bg-cyan-300 blur-3xl" />
         </div>
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:px-8 lg:py-28">
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:px-8 lg:py-16">
           <div>
             <p className="inline-flex rounded-full border border-blue-200/30 bg-white/10 px-4 py-2 text-sm font-semibold text-blue-50">
               Managed IT for small businesses
@@ -188,6 +188,7 @@ export default function HomePage() {
       <section className="bg-[#082b59] py-20 text-white lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
+            tone="dark"
             eyebrow="How Lockwood works"
             title="A disciplined path from uncertainty to steady operations"
             description="You should know what is being done, why it matters, what is still unknown, and which decisions remain yours."
@@ -206,7 +207,7 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <SectionHeading
-          eyebrow="Why Lockwood"
+          eyebrow="Why LIT"
           title="Enterprise experience, delivered personally and sized for small business"
           description="Lockwood IT Solutions combines more than three decades of hands-on IT experience with founder involvement, practical security, and direct communication."
         />

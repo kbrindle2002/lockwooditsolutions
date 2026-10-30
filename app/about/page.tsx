@@ -16,10 +16,10 @@ export default function AboutPage() {
       <PageHero
         eyebrow="About"
         title="Lockwood IT Solutions is a founder-led managed IT provider"
-        description="The full founder story, operating principles, experience, and service approach are available on the Why Lockwood page."
+        description="The full founder story, operating principles, experience, and service approach are available on the Why LIT page."
         actions={
           <>
-            <PrimaryLink href="/why-lockwood/">Why Lockwood</PrimaryLink>
+            <PrimaryLink href="/why-lockwood/">Why LIT</PrimaryLink>
             <SecondaryLink href="/contact/">Contact us</SecondaryLink>
           </>
         }
@@ -27,7 +27,7 @@ export default function AboutPage() {
       <section className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:px-8">
         <p className="leading-7 text-slate-600">
           This legacy page is retained so older links continue to work. Visit{" "}
-          <Link href="/why-lockwood/" className="font-semibold text-blue-700 underline underline-offset-2">Why Lockwood</Link>{" "}
+          <Link href="/why-lockwood/" className="font-semibold text-blue-700 underline underline-offset-2">Why LIT</Link>{" "}
           for the current business information.
         </p>
       </section>

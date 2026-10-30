@@ -48,6 +48,12 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-bold text-slate-950">Service area</h3>
                 <p className="mt-1 text-sm leading-6 text-slate-600">{site.serviceArea}<br />{site.remoteArea}</p>
+                <a
+                  href="#service-area-map"
+                  className="mt-2 inline-block text-sm font-semibold text-blue-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+                >
+                  View service area map
+                </a>
               </div>
             </Card>
           </div>
@@ -66,6 +72,38 @@ export default function ContactPage() {
             <ContactForm />
           </div>
         </Card>
+      </section>
+
+      <section
+        id="service-area-map"
+        className="scroll-mt-48 border-y border-slate-200 bg-slate-50"
+        aria-labelledby="service-area-map-heading"
+      >
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:px-8 lg:py-16">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">Service area map</p>
+            <h2 id="service-area-map-heading" className="mt-3 text-3xl font-bold tracking-tight text-slate-950">
+              Based in Racine and serving businesses across the region
+            </h2>
+            <p className="mt-4 max-w-xl leading-7 text-slate-600">
+              Lockwood IT Solutions provides on-site service throughout {site.serviceArea}. {site.remoteArea}.
+            </p>
+            <p className="mt-3 text-sm leading-6 text-slate-500">
+              The map is centered on Racine, Wisconsin, and does not represent a public walk-in office. Service availability depends on location and project scope.
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <iframe
+              title="Map centered on Racine, Wisconsin"
+              src="https://www.google.com/maps?q=Racine%2C%20Wisconsin&z=8&output=embed"
+              className="h-[360px] w-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+        </div>
       </section>
     </>
   );

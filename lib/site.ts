@@ -1,10 +1,13 @@
 import {
+  BookOpen,
   BriefcaseBusiness,
   CloudCog,
   DatabaseBackup,
   Headphones,
+  Home,
   Network,
   ShieldCheck,
+  Users,
 } from "lucide-react";
 
 export const site = {
@@ -19,10 +22,12 @@ export const site = {
 };
 
 export const navigation = [
-  { href: "/services/", label: "Services" },
-  { href: "/who-we-help/", label: "Who We Help" },
-  { href: "/why-lockwood/", label: "Why Lockwood" },
-  { href: "/resources/", label: "Resources" },
+  { href: "/", label: "Home", icon: Home },
+  { href: "/services/", label: "Services", icon: BriefcaseBusiness },
+  { href: "/who-we-help/", label: "Who We Help", icon: Users },
+  { href: "/why-lockwood/", label: "Why LIT", icon: ShieldCheck },
+  { href: "/resources/", label: "Resources", icon: BookOpen },
+  { href: "/support/", label: "Client Support", icon: Headphones },
 ];
 
 export const services = [
