@@ -34,9 +34,74 @@ async function exists(path) {
   }
 }
 
+function attributeValue(tag, name) {
+  const match = tag.match(new RegExp(`\\s${name}=["']([^"']*)["']`, "i"));
+  return match?.[1] || "";
+}
+
+function cspDirectiveSources(csp, directiveName) {
+  const directive = csp
+    .split(";")
+    .map((value) => value.trim())
+    .find(
+      (value) =>
+        value === directiveName || value.startsWith(`${directiveName} `),
+    );
+
+  return directive ? directive.split(/\s+/).slice(1) : [];
+}
+
 const allFiles = await walk(root);
 const htmlFiles = allFiles.filter((file) => file.endsWith(".html"));
 const documents = new Map();
+
+const staticConfigPath = resolve(root, "staticwebapp.config.json");
+let staticConfig;
+
+try {
+  staticConfig = JSON.parse(await readFile(staticConfigPath, "utf8"));
+} catch (error) {
+  errors.push(
+    `staticwebapp.config.json: invalid JSON (${
+      error instanceof Error ? error.message : "unknown parse error"
+    })`,
+  );
+}
+
+if (staticConfig) {
+  const csp =
+    staticConfig.globalHeaders?.["Content-Security-Policy"] || "";
+  const actualFrameSources = cspDirectiveSources(csp, "frame-src");
+  const expectedFrameSources = [
+    "'self'",
+    "https://www.google.com",
+    "https://maps.google.com",
+  ];
+
+  if (
+    actualFrameSources.length !== expectedFrameSources.length ||
+    expectedFrameSources.some(
+      (source) => !actualFrameSources.includes(source),
+    )
+  ) {
+    errors.push(
+      `staticwebapp.config.json: frame-src must contain only ${
+        expectedFrameSources.join(" ")
+      }`,
+    );
+  }
+
+  const frameAncestors = cspDirectiveSources(csp, "frame-ancestors");
+  if (
+    frameAncestors.length !== 1 ||
+    frameAncestors[0] !== "'none'"
+  ) {
+    errors.push(
+      "staticwebapp.config.json: frame-ancestors must remain 'none'",
+    );
+  }
+}
+
 
 for (const file of htmlFiles) {
   const html = await readFile(file, "utf8");
@@ -44,6 +109,82 @@ for (const file of htmlFiles) {
     html,
     ids: new Set(values(html, /\sid=["']([^"']+)["']/g)),
   });
+}
+
+
+const allowedMapHosts = new Set([
+  "www.google.com",
+  "maps.google.com",
+]);
+const contactFile = resolve(root, "contact/index.html");
+const contactDocument = documents.get(contactFile);
+
+if (!contactDocument) {
+  errors.push("contact/index.html: generated contact page was not found");
+} else {
+  const iframeTags = [
+    ...contactDocument.html.matchAll(/<iframe\b[^>]*>/gi),
+  ].map((match) => match[0]);
+
+  const mapIframes = iframeTags.filter((tag) => {
+    const source = attributeValue(tag, "src");
+
+    try {
+      return allowedMapHosts.has(
+        new URL(source, "https://lockwooditsolutions.com").hostname,
+      );
+    } catch {
+      return false;
+    }
+  });
+
+  if (mapIframes.length !== 1) {
+    errors.push(
+      `contact/index.html: expected one approved Google Maps iframe, found ${mapIframes.length}`,
+    );
+  } else {
+    const mapIframe = mapIframes[0];
+    const source = attributeValue(mapIframe, "src");
+    const title = attributeValue(mapIframe, "title");
+    const loading = attributeValue(mapIframe, "loading").toLowerCase();
+    const referrerPolicy = attributeValue(
+      mapIframe,
+      "referrerpolicy",
+    ).toLowerCase();
+
+    if (!title.trim()) {
+      errors.push("contact/index.html: map iframe requires a title");
+    }
+
+    if (loading !== "lazy") {
+      errors.push(
+        "contact/index.html: map iframe must use loading=\"lazy\"",
+      );
+    }
+
+    if (referrerPolicy !== "no-referrer-when-downgrade") {
+      errors.push(
+        "contact/index.html: map iframe has an unexpected referrer policy",
+      );
+    }
+
+    try {
+      const mapUrl = new URL(
+        source,
+        "https://lockwooditsolutions.com",
+      );
+
+      if (!allowedMapHosts.has(mapUrl.hostname)) {
+        errors.push(
+          `contact/index.html: unapproved map host ${mapUrl.hostname}`,
+        );
+      }
+    } catch {
+      errors.push(
+        `contact/index.html: invalid map iframe source ${source}`,
+      );
+    }
+  }
 }
 
 let internalLinkCount = 0;
