@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "lucide-react": "^1.24.0",
-    "next": "16.2.10",
+    "next": "16.4.3",
     "react": "19.2.7",
     "react-dom": "19.2.7"
   },
@@ -29,8 +29,6 @@
     "typescript": "5.8.3"
   },
   "overrides": {
-    "next": {
-      "postcss": "8.5.19"
-    }
+    "nanoid": "3.3.18"
   }
 }
