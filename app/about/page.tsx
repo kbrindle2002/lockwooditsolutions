@@ -1,26 +1,36 @@
-import { Card } from "../../components/ui";
+import type { Metadata } from "next";
 import Link from "next/link";
+import PageHero from "@/components/PageHero";
+import { PrimaryLink, SecondaryLink } from "@/components/ui";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "About Lockwood IT Solutions and founder Kelly L. Lockwood.",
+  alternates: { canonical: "/why-lockwood/" },
+  robots: { index: false, follow: true },
+};
 
 export default function AboutPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 grid gap-6 md:grid-cols-2">
-      <div>
-        <h1 className="text-3xl font-bold">About Lockwood IT Solutions</h1>
-        <p className="text-slate-400 mt-3">
-          We bring business‑grade reliability and security to homes and small businesses.
-          Proactive protection, clear pricing, and real human support.
+    <>
+      <PageHero
+        eyebrow="About"
+        title="Lockwood IT Solutions is a founder-led managed IT provider"
+        description="The full founder story, operating principles, experience, and service approach are available on the Why Lockwood page."
+        actions={
+          <>
+            <PrimaryLink href="/why-lockwood/">Why Lockwood</PrimaryLink>
+            <SecondaryLink href="/contact/">Contact us</SecondaryLink>
+          </>
+        }
+      />
+      <section className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:px-8">
+        <p className="leading-7 text-slate-600">
+          This legacy page is retained so older links continue to work. Visit{" "}
+          <Link href="/why-lockwood/" className="font-semibold text-blue-700 underline underline-offset-2">Why Lockwood</Link>{" "}
+          for the current business information.
         </p>
-        <Link href="/contact" className="inline-block mt-6 px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700">Get in touch</Link>
-      </div>
-      <Card>
-        <div className="text-base font-semibold">Fast facts</div>
-        <ul className="text-sm text-slate-400 space-y-2 mt-2">
-          <li>Based in Racine County, WI</li>
-          <li>Residential & small business focus</li>
-          <li>Same‑day remote support options</li>
-          <li>Transparent, month‑to‑month plans</li>
-        </ul>
-      </Card>
-    </div>
+      </section>
+    </>
   );
 }

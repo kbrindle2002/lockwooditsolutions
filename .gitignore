@@ -15,30 +15,30 @@ out/
 .env.development
 .env.production
 .env.test
+api/local.settings.json
 
 # Logs
-logs
+logs/
 *.log
 *.log.*
-pids
+pids/
 *.pid
 *.seed
 *.pid.lock
 
-# OS junk files
+# OS and editor files
 .DS_Store
 Thumbs.db
-
-# VSCode/IDE
 .vscode/
 .idea/
 
 # Azure Static Web Apps CLI cache
 .swa/
 
-# Coverage and test output
+# Coverage and package output
 coverage/
 *.lcov
-
-# Misc
 *.tgz
+
+# TypeScript incremental state
+*.tsbuildinfo
