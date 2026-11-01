@@ -45,6 +45,7 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": ["Organization", "LocalBusiness"],
   name: site.name,
+  legalName: site.legalName,
   url: site.url,
   logo: `${site.url}/lockwood-logo-approved.png`,
   email: site.email,
