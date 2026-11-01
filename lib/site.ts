@@ -12,6 +12,7 @@ import {
 
 export const site = {
   name: "Lockwood IT Solutions",
+  legalName: "Lockwood IT Solutions, LLC",
   url: "https://lockwooditsolutions.com",
   email: "info@lockwooditsolutions.com",
   phoneDisplay: "(262) 417-2461",

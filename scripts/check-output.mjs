@@ -244,13 +244,125 @@ for (const [file, document] of documents) {
   }
 }
 
+function requireGeneratedText(relativePath, requiredFragments) {
+  const file = resolve(root, relativePath);
+  const document = documents.get(file);
+
+  if (!document) {
+    errors.push(`${relativePath}: generated page was not found`);
+    return;
+  }
+
+  for (const fragment of requiredFragments) {
+    if (!document.html.includes(fragment)) {
+      errors.push(`${relativePath}: missing required published text "${fragment}"`);
+    }
+  }
+}
+
+const linkedInUrl =
+  "https://www.linkedin.com/company/lockwooditsolutions/";
+
+if (
+  ![...documents.values()].some((document) =>
+    document.html.includes(linkedInUrl),
+  )
+) {
+  errors.push("generated HTML: verified LinkedIn company URL was not found");
+}
+
+requireGeneratedText("support/index.html", [
+  "Need support for an environment managed by Lockwood IT Solutions?",
+]);
+
+requireGeneratedText("privacy/index.html", [
+  "Lockwood IT Solutions, LLC",
+  "Microsoft Azure",
+  "Twilio SendGrid",
+  "Google Maps",
+]);
+
+requireGeneratedText("terms/index.html", [
+  "Lockwood IT Solutions, LLC",
+  "Microsoft Azure",
+  "Twilio SendGrid",
+  "Google Maps",
+]);
+
+let structuredLegalNameFound = false;
+
+for (const [file, document] of documents) {
+  const display = relative(root, file);
+  const jsonLdBlocks = [
+    ...document.html.matchAll(
+      /<script\b[^>]*\btype=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+    ),
+  ];
+
+  for (const match of jsonLdBlocks) {
+    try {
+      const parsed = JSON.parse(match[1]);
+      const records = Array.isArray(parsed) ? parsed : [parsed];
+
+      if (
+        records.some(
+          (record) =>
+            record &&
+            typeof record === "object" &&
+            record.legalName === "Lockwood IT Solutions, LLC",
+        )
+      ) {
+        structuredLegalNameFound = true;
+      }
+    } catch {
+      errors.push(`${display}: contains an invalid JSON-LD block`);
+    }
+  }
+}
+
+if (!structuredLegalNameFound) {
+  errors.push(
+    "generated HTML: Organization structured data is missing legalName",
+  );
+}
+
+const controlledPublicationPatterns = [
+  {
+    description: "an EIN-formatted value",
+    pattern: /\b\d{2}-\d{7}\b/,
+  },
+  {
+    description: "a D-U-N-S reference",
+    pattern: /D-U-N-S/i,
+  },
+  {
+    description: "a standalone DUNS reference",
+    pattern: /\bDUNS\b/i,
+  },
+  {
+    description: "the phrase provider notice address",
+    pattern: /provider notice address/i,
+  },
+];
+
+for (const [file, document] of documents) {
+  const display = relative(root, file);
+
+  for (const check of controlledPublicationPatterns) {
+    if (check.pattern.test(document.html)) {
+      errors.push(`${display}: contains ${check.description}`);
+    }
+  }
+}
+
 for (const required of [
   "staticwebapp.config.json",
   "robots.txt",
   "sitemap.xml",
-  "lockwood-logo.svg",
-  "lockwood-mark.svg",
-  "lockwood-mark.png",
+  "lockwood-logo-approved.png",
+  "lockwood-mark-approved.png",
+  "icon.png",
+  "apple-icon.png",
 ]) {
   if (!(await exists(resolve(root, required)))) errors.push(`missing output file ${required}`);
 }
