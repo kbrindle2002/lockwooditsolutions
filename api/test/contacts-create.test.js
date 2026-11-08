@@ -1,9 +1,9 @@
 const assert = require("node:assert/strict");
 const test = require("node:test");
+const { denyFetch, assertNoNetworkAttempts } = require("./offline-guard.cjs");
 const handler = require("../contacts-create/index.js");
 
 const allowedOrigin = "https://lockwooditsolutions.com";
-const originalFetch = global.fetch;
 
 function createContext() {
   return {
@@ -65,10 +65,11 @@ function clearSettings() {
   delete process.env.CONTACT_FROM;
   delete process.env.CONTACT_TO;
   delete process.env.ALLOWED_ORIGINS;
-  global.fetch = originalFetch;
+  global.fetch = denyFetch;
 }
 
 test.beforeEach(clearSettings);
+test.afterEach(assertNoNetworkAttempts);
 test.after(clearSettings);
 
 test("answers preflight requests", async () => {

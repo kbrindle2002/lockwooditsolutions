@@ -1,4 +1,4 @@
-name: Validate and deploy Lockwood IT Solutions
+name: Validate Lockwood IT Solutions
 
 on:
   push:
@@ -9,102 +9,158 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 concurrency:
-  group: lockwood-site-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: lockwood-artifact-upload
+  cancel-in-progress: false
 
 jobs:
   validate:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
     name: Validate website and API
+    if: github.event_name == 'push' || github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      manifest_sha256: ${{ steps.package.outputs.manifest_sha256 }}
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Use Node.js 22
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-
       - name: Install website dependencies
         run: npm ci
-
       - name: Type-check
         run: npm run typecheck
-
-      - name: Build static site
+      - name: Build once
         run: npm run build
-
-      - name: Check generated routes, links, and assets
+      - name: Validate generated static output
         run: npm run check:output
-
-      - name: Install API package
-        run: npm ci
-        working-directory: api
-
-      - name: Test contact API
-        run: npm test
-        working-directory: api
-
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
-
-      - name: Audit API production dependencies
-        run: npm audit --omit=dev --audit-level=high
-        working-directory: api
-
-  build_and_deploy:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    needs: validate
-    runs-on: ubuntu-latest
-    name: Build and deploy to Azure Static Web Apps
-    env:
-      AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Require Azure Static Web Apps deployment token
+      - name: Package exact static output and dependency-free API
+        id: package
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+        run: node scripts/release-artifact.mjs package
+      # Acquisition is separate from offline tests; no mutable image tag fallback.
+      - name: Acquire separately approved test image
+        env:
+          LITS_TEST_IMAGE: ${{ vars.LITS_TEST_IMAGE }}
         shell: bash
         run: |
-          if [ -z "${AZURE_STATIC_WEB_APPS_API_TOKEN:-}" ]; then
-            echo "::error::AZURE_STATIC_WEB_APPS_API_TOKEN is not configured."
-            exit 1
-          fi
+          [[ "$LITS_TEST_IMAGE" =~ ^node@sha256:[a-f0-9]{64}$ ]] || { echo 'Pinned test image is required'; exit 1; }
+          docker pull "$LITS_TEST_IMAGE"
+      - name: Test packaged API with networking disabled
+        env:
+          LITS_TEST_IMAGE: ${{ vars.LITS_TEST_IMAGE }}
+        run: node scripts/run-api-tests.mjs --api-root release/api
+      - name: Reverify package after validation
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+          EXPECTED_MANIFEST_SHA256: ${{ steps.package.outputs.manifest_sha256 }}
+        run: node scripts/release-artifact.mjs verify
+      - name: Enforce artifact size and complete file inventory
+        run: node scripts/check-artifact-limits.mjs size
+      - name: Reserve daily artifact upload
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/check-artifact-limits.mjs frequency
+      - name: Store validated package
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: validated-site-${{ github.run_id }}-${{ github.run_attempt }}
+          path: release/
+          if-no-files-found: error
+          retention-days: 3
+          include-hidden-files: true
 
-      - name: Deploy website and managed API
+  deploy:
+    # Preparation lock: only a separately approved workflow change may remove false.
+    # Repository variables, successful validation, or manual approval cannot enable this job.
+    if: >-
+      false && vars.LITS_DEPLOYMENT_ENABLED == 'true' &&
+      (github.event_name == 'push' ||
+      (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository))
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    environment:
+      name: ${{ github.event_name == 'push' && 'lits-production' || 'lits-preview' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Reject missing reviewer protection
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LITS_ENVIRONMENT: ${{ github.event_name == 'push' && 'lits-production' || 'lits-preview' }}
+          LITS_MANIFEST_SHA256: ${{ needs.validate.outputs.manifest_sha256 }}
+        run: node scripts/check-deployment-gate.mjs
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.validate.outputs.artifact_id }}
+          path: release
+          merge-multiple: true
+      - name: Reject drift or wrong commit
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+          EXPECTED_MANIFEST_SHA256: ${{ needs.validate.outputs.manifest_sha256 }}
+        run: node scripts/release-artifact.mjs verify
+      - name: Upload validated files without rebuilding
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          azure_static_web_apps_api_token: ${{ secrets.LITS_SWA_DEPLOYMENT_TOKEN }}
           action: upload
-          app_location: /
-          api_location: api
-          output_location: out
-          app_build_command: npm run build
+          app_location: release/app
+          api_location: release/api
+          output_location: ''
+          skip_app_build: true
+          skip_api_build: true
           production_branch: main
 
   close_preview:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    # Cleanup is a hosted write and remains unconditionally disabled as well.
+    if: >-
+      false && vars.LITS_DEPLOYMENT_ENABLED == 'true' && github.event_name == 'pull_request' &&
+      github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    name: Close pull-request preview
-    env:
-      AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    environment:
+      name: lits-preview-cleanup
     steps:
-      - name: Require Azure Static Web Apps deployment token
-        shell: bash
-        run: |
-          if [ -z "${AZURE_STATIC_WEB_APPS_API_TOKEN:-}" ]; then
-            echo "::error::AZURE_STATIC_WEB_APPS_API_TOKEN is not configured."
-            exit 1
-          fi
-
-      - name: Close preview environment
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Reject missing reviewer protection
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LITS_ENVIRONMENT: lits-preview-cleanup
+        run: node scripts/check-deployment-gate.mjs
+      - name: Close approved preview
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          azure_static_web_apps_api_token: ${{ secrets.LITS_SWA_DEPLOYMENT_TOKEN }}
           action: close
