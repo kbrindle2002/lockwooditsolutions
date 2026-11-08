@@ -43,7 +43,7 @@ export default function SiteFooter() {
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-blue-200">Services</h2>
           <ul className="mt-4 space-y-3 text-sm">
-            {services.slice(0, 4).map((item) => (
+            {services.map((item) => (
               <li key={item.slug}>
                 <Link href={`/services/${item.slug}/`} className="text-blue-50 transition hover:text-white hover:underline">
                   {item.shortTitle}
@@ -89,6 +89,17 @@ export default function SiteFooter() {
               >
                 <LinkedInIcon className="h-4 w-4 shrink-0" />
                 <span>LinkedIn</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={site.social.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 transition hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                aria-label="Visit Lockwood IT Solutions on Facebook"
+              >
+                <span>Facebook</span>
               </a>
             </li>
             <li>

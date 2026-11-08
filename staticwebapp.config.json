@@ -1,6 +1,36 @@
 {
   "routes": [
     {
+      "route": "/services/projects-advisory/",
+      "redirect": "/services/it-consulting/",
+      "statusCode": 301
+    },
+    {
+      "route": "/services/projects-advisory",
+      "redirect": "/services/it-consulting/",
+      "statusCode": 301
+    },
+    {
+      "route": "/services/network-infrastructure/",
+      "redirect": "/services/network-support/",
+      "statusCode": 301
+    },
+    {
+      "route": "/services/network-infrastructure",
+      "redirect": "/services/network-support/",
+      "statusCode": 301
+    },
+    {
+      "route": "/services/managed-it/",
+      "redirect": "/services/technical-support/",
+      "statusCode": 301
+    },
+    {
+      "route": "/services/managed-it",
+      "redirect": "/services/technical-support/",
+      "statusCode": 301
+    },
+    {
       "route": "/pricing",
       "redirect": "/services/",
       "statusCode": 301
@@ -27,7 +57,7 @@
     },
     {
       "route": "/copilot",
-      "redirect": "/services/projects-advisory/",
+      "redirect": "/services/it-consulting/",
       "statusCode": 301
     },
     {

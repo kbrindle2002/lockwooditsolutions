@@ -29,7 +29,7 @@ function validBody(overrides = {}) {
     phone: "262-555-0100",
     company: "Example Company",
     teamSize: "10-24",
-    service: "Managed IT Services",
+    service: "Technical Support",
     message: "This is a valid test request with enough detail.",
     source: "website",
     path: "/contact",

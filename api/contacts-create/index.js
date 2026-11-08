@@ -6,12 +6,14 @@ const DEFAULT_ORIGINS = [
 ];
 
 const SERVICE_OPTIONS = new Set([
-  "Managed IT Services",
-  "Managed Cybersecurity",
-  "Microsoft 365 and Cloud",
-  "Backup and Business Continuity",
-  "Network and Infrastructure",
-  "Projects and Advisory",
+  "Cybersecurity",
+  "IT Project Management",
+  "Backup & Recovery",
+  "Business Continuity",
+  "Network Support",
+  "Technical Support",
+  "Microsoft 365",
+  "IT Consulting",
   "Not sure yet",
 ]);
 

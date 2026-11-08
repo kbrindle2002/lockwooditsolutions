@@ -125,7 +125,7 @@ export default function WhyLockwoodPage() {
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {processSteps.map((step) => (
             <Card key={step.number} className="p-6">
-              <span className="text-4xl font-black text-blue-100">{step.number}</span>
+              <span className="text-4xl font-black text-blue-700">{step.number}</span>
               <h3 className="mt-3 text-xl font-bold text-slate-950">{step.title}</h3>
               <p className="mt-3 text-sm leading-6 text-slate-600">{step.description}</p>
             </Card>

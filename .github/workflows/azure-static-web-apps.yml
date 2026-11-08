@@ -72,6 +72,7 @@ jobs:
       - name: Reserve daily artifact upload
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          LITS_UPLOAD_EXCEPTION_TREE: ${{ vars.LITS_UPLOAD_EXCEPTION_TREE }}
         run: node scripts/check-artifact-limits.mjs frequency
       - name: Store validated package
         id: upload

@@ -20,12 +20,14 @@ type Status = "idle" | "sending" | "success" | "error";
 
 const teamSizes = ["1-9", "10-24", "25-49", "50-99", "100+", "Not sure"];
 const serviceOptions = [
-  "Managed IT Services",
-  "Managed Cybersecurity",
-  "Microsoft 365 and Cloud",
-  "Backup and Business Continuity",
-  "Network and Infrastructure",
-  "Projects and Advisory",
+  "Cybersecurity",
+  "IT Project Management",
+  "Backup & Recovery",
+  "Business Continuity",
+  "Network Support",
+  "Technical Support",
+  "Microsoft 365",
+  "IT Consulting",
   "Not sure yet",
 ];
 

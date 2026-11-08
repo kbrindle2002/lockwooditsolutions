@@ -7,9 +7,9 @@ import { Card, PrimaryLink, SecondaryLink, SectionHeading } from "@/components/u
 import { services, serviceLevels } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Managed IT Services",
+  title: "Specialties",
   description:
-    "Managed IT, cybersecurity, Microsoft 365, backup, networking, infrastructure, projects, and technology advisory for small businesses.",
+    "Cybersecurity, IT Project Management, Backup & Recovery, Business Continuity, Network Support, Technical Support, Microsoft 365, IT Consulting.",
   alternates: { canonical: "/services/" },
 };
 
@@ -18,8 +18,8 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="Services"
-        title="Managed IT from the device to the cloud"
-        description="Lockwood IT Solutions connects support, cybersecurity, Microsoft 365, backup, networks, and planning into one accountable operating model for small business."
+        title="Specialties"
+        description="Explore the eight specialties below."
         actions={
           <>
             <PrimaryLink href="/contact/">Schedule an IT assessment</PrimaryLink>
@@ -32,7 +32,7 @@ export default function ServicesPage() {
         <SectionHeading
           eyebrow="Service areas"
           title="Start with the business outcome—not a product list"
-          description="Each service area can support a managed relationship or a focused project. The right combination depends on where responsibility, risk, and operational friction exist today."
+          description="Cybersecurity, IT Project Management, Backup &amp; Recovery, Business Continuity, Network Support, Technical Support, Microsoft 365, and IT Consulting."
         />
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           {services.map((service) => {
@@ -48,14 +48,6 @@ export default function ServicesPage() {
                     <p className="mt-2 leading-7 text-slate-600">{service.summary}</p>
                   </div>
                 </div>
-                <ul className="mt-6 grid gap-3 text-sm leading-6 text-slate-700 sm:grid-cols-2">
-                  {service.features.slice(0, 4).map((item) => (
-                    <li key={item} className="flex gap-3">
-                      <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-blue-700" aria-hidden="true" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
                 <Link href={`/services/${service.slug}/`} className="mt-7 inline-flex items-center gap-2 font-semibold text-blue-700 hover:text-blue-900 hover:underline">
                   Explore {service.shortTitle.toLowerCase()} <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>

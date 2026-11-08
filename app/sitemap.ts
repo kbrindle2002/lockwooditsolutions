@@ -5,6 +5,7 @@ export const dynamic = "force-static";
 
 const routes = [
   "",
+  "/about",
   "/services",
   ...services.map((service) => `/services/${service.slug}`),
   "/who-we-help",

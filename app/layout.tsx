@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
-import { site } from "@/lib/site";
+import { services, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -51,7 +51,7 @@ const structuredData = {
   email: site.email,
   telephone: site.phoneHref,
   slogan: site.tagline,
-  sameAs: [site.social.linkedin],
+  sameAs: [site.social.linkedin, site.social.facebook],
   founder: {
     "@type": "Person",
     name: "Kelly L. Lockwood",
@@ -61,14 +61,7 @@ const structuredData = {
     { "@type": "AdministrativeArea", name: "Northern Illinois" },
     { "@type": "AdministrativeArea", name: "Midwest United States" },
   ],
-  knowsAbout: [
-    "Managed IT services",
-    "Cybersecurity",
-    "Microsoft 365",
-    "Cloud administration",
-    "Business continuity",
-    "Computer networking",
-  ],
+  knowsAbout: services.map((service) => service.title),
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

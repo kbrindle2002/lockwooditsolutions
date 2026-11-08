@@ -21,6 +21,7 @@ export const site = {
   serviceArea: "Southeast Wisconsin and Northern Illinois",
   remoteArea: "Remote support available across the Midwest",
   social: {
+    facebook: "https://www.facebook.com/lockwooditsolutions",
     linkedin: "https://www.linkedin.com/company/lockwooditsolutions/",
   },
 };
@@ -36,100 +37,60 @@ export const navigation = [
 
 export const services = [
   {
-    slug: "managed-it",
-    title: "Managed IT Services",
-    shortTitle: "Managed IT",
-    summary:
-      "Day-to-day support, monitoring, patching, onboarding, documentation, and vendor coordination for a steadier technology environment.",
-    outcome: "Keep people productive and routine technology work under control.",
-    icon: Headphones,
-    features: [
-      "Remote help desk and scheduled on-site support",
-      "User onboarding, offboarding, and access changes",
-      "Endpoint monitoring, patching, and lifecycle planning",
-      "Technology inventory and useful documentation",
-      "Vendor coordination and recurring service reviews",
-    ],
-  },
-  {
     slug: "cybersecurity",
-    title: "Managed Cybersecurity",
+    title: "Cybersecurity",
     shortTitle: "Cybersecurity",
-    summary:
-      "Layered protection for identities, endpoints, email, web access, and everyday business operations—without fear-based promises.",
-    outcome: "Reduce avoidable risk and make security part of daily IT operations.",
+    summary: "Security-focused reviews, risk guidance, identity protection, and practical recommendations to help strengthen business technology.",
     icon: ShieldCheck,
-    features: [
-      "Multi-factor authentication and identity hardening",
-      "Endpoint protection and response coordination",
-      "Email security and phishing-resistance controls",
-      "DNS and web filtering",
-      "Security baselines, reviews, and prioritized remediation",
-    ],
   },
   {
-    slug: "microsoft-365",
-    title: "Microsoft 365 and Cloud",
-    shortTitle: "Microsoft 365",
-    summary:
-      "Administration, identity, device management, collaboration, migrations, and licensing guidance for Microsoft-centered businesses.",
-    outcome: "Turn Microsoft 365 into a governed business platform instead of a collection of disconnected subscriptions.",
-    icon: CloudCog,
-    features: [
-      "Microsoft 365 tenant administration",
-      "Entra ID identity and access management",
-      "Intune endpoint and mobile-device management",
-      "Exchange Online, Teams, SharePoint, and OneDrive support",
-      "Tenant cleanup, migrations, and licensing review",
-    ],
+    slug: "it-project-management",
+    title: "IT Project Management",
+    shortTitle: "IT Project Management",
+    summary: "Structured planning and coordination for technology upgrades, deployments, migrations, and other clearly defined IT projects.",
+    icon: BriefcaseBusiness,
+  },
+  {
+    slug: "backup-recovery",
+    title: "Backup & Recovery",
+    shortTitle: "Backup & Recovery",
+    summary: "Backup and recovery readiness reviews, restore planning, vendor evaluation, and testing guidance without recovery guarantees.",
+    icon: DatabaseBackup,
   },
   {
     slug: "business-continuity",
-    title: "Backup and Business Continuity",
+    title: "Business Continuity",
     shortTitle: "Business Continuity",
-    summary:
-      "Backup planning, restore testing, recovery documentation, and practical preparation for outages, mistakes, and security incidents.",
-    outcome: "Know what is protected, how recovery works, and who is responsible when something goes wrong.",
+    summary: "Business continuity planning that identifies critical systems, recovery priorities, dependencies, and practical response steps.",
     icon: DatabaseBackup,
-    features: [
-      "Endpoint, server, and Microsoft 365 backup planning",
-      "Restore testing and recovery verification",
-      "Recovery objectives and responsibility mapping",
-      "Business-continuity and disaster-recovery documentation",
-      "Recovery planning for vendors and line-of-business systems",
-    ],
   },
   {
-    slug: "network-infrastructure",
-    title: "Network and Infrastructure",
-    shortTitle: "Networks",
-    summary:
-      "Firewalls, switches, Wi-Fi, segmentation, VPN, servers, and infrastructure documentation sized for small-business needs.",
-    outcome: "Build a dependable foundation for the people, devices, and cloud services your business relies on.",
+    slug: "network-support",
+    title: "Network Support",
+    shortTitle: "Network Support",
+    summary: "Planning, troubleshooting, and improvement guidance for business networks, connectivity, Wi-Fi, and infrastructure projects.",
     icon: Network,
-    features: [
-      "Firewall, switching, and business Wi-Fi management",
-      "Guest access, segmentation, and secure remote access",
-      "Server and virtualization support",
-      "Performance troubleshooting and lifecycle planning",
-      "Network diagrams and infrastructure documentation",
-    ],
   },
   {
-    slug: "projects-advisory",
-    title: "Projects and Technology Advisory",
-    shortTitle: "Projects & Advisory",
-    summary:
-      "Focused assessments, migrations, office moves, co-managed support, roadmaps, and responsible AI readiness.",
-    outcome: "Make technology changes with a clear scope, practical priorities, and accountable decisions.",
+    slug: "technical-support",
+    title: "Technical Support",
+    shortTitle: "Technical Support",
+    summary: "Scheduled business technology support for Microsoft 365, Windows, devices, applications, and common operational issues.",
+    icon: Headphones,
+  },
+  {
+    slug: "microsoft-365",
+    title: "Microsoft 365",
+    shortTitle: "Microsoft 365",
+    summary: "Microsoft 365 support, administration, security guidance, account management, and practical help for business collaboration.",
+    icon: CloudCog,
+  },
+  {
+    slug: "it-consulting",
+    title: "IT Consulting",
+    shortTitle: "IT Consulting",
+    summary: "Practical technology planning, system reviews, project guidance, and clear recommendations tailored to your business needs.",
     icon: BriefcaseBusiness,
-    features: [
-      "Technology assessments and improvement roadmaps",
-      "Microsoft 365 migrations and tenant projects",
-      "Office moves, network refreshes, and security projects",
-      "Co-managed support for internal IT staff",
-      "Responsible AI and Microsoft Copilot readiness",
-    ],
   },
 ] as const;
 
